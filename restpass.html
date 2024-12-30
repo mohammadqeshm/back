@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input id="inputmail" type="text" placeholder="email">
+    <button id="btnmail">دریافت کد</button>
+    <h1 id=sts></h1>
+
+
+    <div id="dive" style="display: none;">
+        <p id="time"></p>
+<input id="inputmail2"  type="text" placeholder="ورود کد ">
+<button id="btnmail2" >تایید</button>
+<h1 id="sts2"></h1>
+    </div>
+
+
+<div id="dive3" style="display:none;">
+<input id="inputmail3"  type="text" placeholder=" رمز جدید ">>
+<button id="btnmail3" >تغییر رمز</button>
+<h1 id="sts3"></h1>
+</div>
+
+
+    <script>
+        //عملیات  ارسال کد  
+let inmail=document.querySelector("#inputmail")
+let btmmail=document.querySelector("#btnmail")
+let dive=document.querySelector("#dive")
+
+let sts=document.querySelector("#sts")
+let email;
+let codee;
+btmmail.addEventListener("click",()=>{
+let mail=inmail.value
+async function namm(params) {
+  let req=await fetch('http://localhost:5000/regster',{
+    method:"post",
+    headers:{
+      "Content-Type": "application/json",
+    },
+    body:JSON.stringify({
+      email:mail
+    })
+  })
+  let res=await req.json()
+console.log(res);
+if(res.sttus=="not"){
+sts.textContent="بنظر میرسه چنین کاربری در سیستم موجود نیست"
+sts.style="color:red"
+}else{
+sts.textContent="کد ارسال شد"
+sts.style="color:green"
+email=mail
+dive.style="display:flex"
+timee()
+}
+
+
+}
+namm()
+
+
+
+})
+
+
+        //عملیات  تایید کد  
+let inmail2=document.querySelector("#inputmail2")
+let btmmail2=document.querySelector("#btnmail2")
+let textime=document.querySelector("#time")
+let sts2=document.querySelector("#sts2")
+let dive3=document.querySelector("#dive3")
+
+function timee() {
+    let s=59
+    let m=5
+   let r= setInterval(() => {
+        s--
+        if (s==0) {
+            s=59
+            m-- 
+            if (m==0) {
+            clearInterval(r)
+        }
+        }
+       textime.textContent=`0${m}:${s}`
+    }, 1000);
+}
+btmmail2.addEventListener("click",()=>{
+let code=inmail2.value
+async function namm(params) {
+  let req=await fetch('http://localhost:5000/oky',{
+    method:"post",
+    headers:{
+      "Content-Type": "application/json",
+    },
+    body:JSON.stringify({
+      email:email,
+      code:code
+    })
+  })
+  let res=await req.json()
+console.log(res);
+if(res.status=="not"){
+sts2.textContent="کد اشتباه یا تاریخ گذشته"
+sts2.style="color:red"
+}else{
+    dive3.style="display:flex"
+sts2.textContent="  تایید شد لطفا پسورد جدید ست کنید"
+sts2.style="color:green"
+codee=code
+}
+
+
+}
+namm()
+
+
+
+})
+
+        //عملیات   تغییر رمز  
+let inmail3=document.querySelector("#inputmail3")
+let btmmail3=document.querySelector("#btnmail3")
+let sts3=document.querySelector("#sts3")
+
+btmmail3.addEventListener("click",()=>{
+let newpass=inmail3.value
+async function namm(params) {
+  let req=await fetch('http://localhost:5000/restpassword',{
+    method:"post",
+    headers:{
+      "Content-Type": "application/json",
+    },
+    body:JSON.stringify({
+      email:email,
+      code:codee,
+      newpassword:newpass
+    })
+  })
+  let res=await req.json()
+console.log(res);
+if(res.status=="yes"){
+sts3.textContent="پسوردت تغییر پیدا کرد لطفا با رمز جدید  وارد حساب شوید"
+sts3.style="color:green"
+
+}else{
+  sts3.textContent=res.status
+sts3.style="color:red"
+
+}
+
+
+}
+namm()
+
+
+
+})
+
+
+
+
+
+
+    </script>
+</body>
+</html>

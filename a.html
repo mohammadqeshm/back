@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head >
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="" type="icon">
+</head>
+<body >
+    
+
+<p>ثبت نام</p>
+<input id="su-email" placeholder="email" type="text">
+<input id="su-password" placeholder="passord" type="text">
+<button id="su-botton">ثبت نام</button>
+
+
+<p> ورود</p>
+<input id="si-email" placeholder="email" type="text">
+<input id="si-password" placeholder="passord" type="text">
+<button id="si-botton"> ورود</button>
+<a href="/restpass">فراموشی رمز عبور؟</a>
+<a style="text-decoration: none;" href="/auth/google">
+<div style="display: flex;" id="googlee">
+  <p>sign with google</p>
+  <img width="30px" src="https://th.bing.com/th/id/OIP.-GOu9NFfFJir5vLUmM3JhwHaHa?w=178&h=181&c=7&r=0&o=5&pid=1.7" alt="">
+</div></a>
+
+    <script>
+
+//عملیات ثبت نام
+let suptn=document.querySelector("#su-botton")
+let supassword=document.querySelector("#su-password")
+let suemail=document.querySelector("#su-email")
+suptn.addEventListener("click",()=>{
+let pass=supassword.value
+let ema=suemail.value
+
+
+async function namm(params) {
+  let req=await fetch('http://localhost:5000/signup',{
+    method:"post",
+    headers:{
+      "Content-Type": "application/json",
+    },
+    body:JSON.stringify({
+      password:pass,
+      email:ema
+    })
+  })
+  let res=await req.json()
+console.log(res);
+}
+namm()
+
+
+
+})
+
+//عملیات  ورود
+let siptn=document.querySelector("#si-botton")
+let sipassword=document.querySelector("#si-password")
+let siemail=document.querySelector("#si-email")
+siptn.addEventListener("click",()=>{
+let pass=sipassword.value
+let ema=siemail.value
+
+
+async function name(params) {
+  let req=await fetch('http://localhost:5000/signin',{
+    method:"post",
+    headers:{
+      "Content-Type": "application/json",
+    },
+    body:JSON.stringify({
+      password:pass,
+      email:ema
+    })
+  })
+  let res=await req.json()
+console.log(res);
+}
+name()
+
+
+
+})
+
+
+
+
+     </script>
+</body>
+</html>
