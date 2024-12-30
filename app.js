@@ -18,10 +18,10 @@ const jalaali=require("jalaali-js")
 
 //datebase---------------------------------------------------
 let database=mysql2.createPool({
-    host:"localhost",
-    user:"root",
-    password:"1234",
-    database:"test-log"
+    host:process.env.DB_HOST,
+    user:process.env.DB_USER,
+    password:process.env.DB_PASSWORD,
+    database:process.env.DB_NAME
 }).promise()
 //-----------------------
 
@@ -29,9 +29,10 @@ let database=mysql2.createPool({
 //pack-run-----------------------------------------------------
 
 let app=express()
-app.listen(5000,(i)=>{
-    console.log("start port");
-})
+const port = process.env.PORT || 5000;
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
 console.log(process.env.ci);
 function emailsend(code,email) {
     // ساخت یک transporter (تنظیمات سرویس‌دهنده ایمیل)
@@ -67,7 +68,7 @@ const transporter = nodemailer.createTransport({
 //globall-midlwer----------------------------------------------
 
 app.use(cors({
-  origin: 'http://localhost:3000', // آدرس فرانت‌اند
+  origin: 'https://mohammadqeshm.github.io/code-w/index.html', // آدرس فرانت‌اند
   credentials: true, // برای ارسال کوکی
 }));
 app.use(express.json())
@@ -314,12 +315,12 @@ let dateactiv=new Date()
     // ایجاد توکن JWT برای کاربر
     let token= await jwt.sign({id:uss2[0].id},'testapp',{expiresIn:"12h"})
     res.cookie('tooky', token)
-    res.redirect("http://localhost:3000/")
+    res.redirect("https://mohammadqeshm.github.io/code-w/index.html")
   } else {
     // اگر کاربر قبلاً ثبت‌نام کرده باشد
     let token= await jwt.sign({id:uss[0].id},'testapp',{expiresIn:"12h"})
     res.cookie('tooky', token)
-   res.redirect("http://localhost:3000/")
+   res.redirect("https://mohammadqeshm.github.io/code-w/index.html")
 
   }
 });
@@ -593,7 +594,6 @@ res.sendFile(path.join(__dirname,"a.html"))
 
 
 //-------------------------
-
 
 
 
