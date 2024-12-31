@@ -90,7 +90,7 @@ const transporter = nodemailer.createTransport({
 //globall-midlwer----------------------------------------------
 
 app.use(cors({
-  origin: 'https://mohammadqeshm.github.io/code-w/index.html', // آدرس فرانت‌اند
+   origin: 'https://mohammadqeshm.github.io', // دامنه مجاز
   credentials: true, // برای ارسال کوکی
 }));
 app.use(express.json())
@@ -135,22 +135,7 @@ passport.deserializeUser((user, done) => {
 
 //api----------------------------------------------------------
 app.post("/signup",async(req,res)=>{
-    async function createTable() {
-        
-  const query =`
-SELECT table_name 
-FROM information_schema.tables 
-WHERE table_schema = 'public';`;
-  try {
-  let dbmm=  await database.query(query);
-    console.log('جدول اوکی شد');
-     console.log(dbmm)
-  } catch (err) {
-    console.error('خطای ساخت جدول:', err);
-  } 
-}
 
-createTable();
  try {  
 let email=req.body.email
 let password=req.body.password
