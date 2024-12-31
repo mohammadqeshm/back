@@ -143,7 +143,33 @@ database.connect()
     .catch((err) => {
         console.error('متصل نیست پایگاه داده:', err);
     });
-    
+    async function createTable() {
+  const query = `
+    CREATE TABLE users (
+      id SERIAL PRIMARY KEY,
+      email VARCHAR(100) NOT NULL UNIQUE,
+      password VARCHAR(300) DEFAULT 'null',
+      googleid VARCHAR(400) DEFAULT NULL,
+      code INT DEFAULT NULL,
+      date BIGINT DEFAULT NULL,
+      dateactive TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      usernamee VARCHAR(100) NOT NULL UNIQUE,
+      nameshop VARCHAR(50) DEFAULT 'نامی تعریف نشده'
+    );
+  `;
+  
+  try {
+    await database.connect();
+    await database.query(query);
+    console.log('Table created successfully');
+  } catch (err) {
+    console.error('Error creating table:', err);
+  } finally {
+    await database.end();
+  }
+}
+
+createTable();
  try {  
 let email=req.body.email
 let password=req.body.password
