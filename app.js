@@ -144,26 +144,27 @@ database.connect()
         console.error('متصل نیست پایگاه داده:', err);
     });
     async function createTable() {
-  const query = `
-    CREATE TABLE users (
-      id SERIAL PRIMARY KEY,
-      email VARCHAR(100) NOT NULL UNIQUE,
-      password VARCHAR(300) DEFAULT 'null',
-      googleid VARCHAR(400) DEFAULT NULL,
-      code INT DEFAULT NULL,
-      date BIGINT DEFAULT NULL,
-      dateactive TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-      usernamee VARCHAR(100) NOT NULL UNIQUE,
-      nameshop VARCHAR(50) DEFAULT 'نامی تعریف نشده'
+  const query =`
+    CREATE TABLE orders (
+        id SERIAL PRIMARY KEY,
+        userid INT DEFAULT NULL,
+        namee VARCHAR(30) NOT NULL,
+        numbers INT NOT NULL,
+        typedate VARCHAR(2) NOT NULL,
+        price VARCHAR(20) NOT NULL,
+        barcode BIGINT NOT NULL,
+        datey VARCHAR(15) NOT NULL,
+        addrs VARCHAR(100) DEFAULT NULL,
+        CONSTRAINT fk_user FOREIGN KEY (userid) REFERENCES users (id)
     );
   `;
   
   try {
     await database.connect();
     await database.query(query);
-    console.log('Table created successfully');
+    console.log('جدول اوکی شد');
   } catch (err) {
-    console.error('Error creating table:', err);
+    console.error('خطای ساخت جدول:', err);
   } finally {
     await database.end();
   }
