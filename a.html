@@ -9,7 +9,7 @@
 <body >
     
 
-<p>ثبت نام</p>
+<p>ثبتنام</p>
 <input id="su-email" placeholder="email" type="text">
 <input id="su-password" placeholder="passord" type="text">
 <button id="su-botton">ثبت نام</button>
@@ -38,7 +38,7 @@ let ema=suemail.value
 
 
 async function namm(params) {
-  let req=await fetch('http://localhost:5000/signup',{
+  let req=await fetch('https://code-w.onrender.com/signup',{
     method:"post",
     headers:{
       "Content-Type": "application/json",
@@ -67,7 +67,7 @@ let ema=siemail.value
 
 
 async function name(params) {
-  let req=await fetch('http://localhost:5000/signin',{
+  let req=await fetch('https://code-w.onrender.com/signin',{
     method:"post",
     headers:{
       "Content-Type": "application/json",
