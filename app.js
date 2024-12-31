@@ -810,8 +810,12 @@ res.json(data.rows)
   }
 })
 app.post('/logout', (req, res) => {
-  res.clearCookie('tooky'); // حذف کوکی 'authToken'
-  res.send('شما با موفقیت خارج شدید');
+res.clearCookie('tooky', {
+  httpOnly: true,  // اطمینان از این که کوکی از دسترس جاوااسکریپت خارج است
+  secure: true,    // استفاده از HTTPS در محیط تولید
+  path: '/',       // مسیر کوکی
+});
+res.json({status:'شما با موفقیت خارج شدید');
 });
  app.get("/",(req,res)=>{
 res.sendFile(path.join(__dirname,"a.html"))
