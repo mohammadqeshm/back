@@ -90,9 +90,11 @@ const transporter = nodemailer.createTransport({
 //globall-midlwer----------------------------------------------
 
 app.use(cors({
-   origin: 'https://mohammadqeshm.github.io', // دامنه مجاز
+   origin: ['http://localhost:5000', 'https://mohammadqeshm.github.io'], // دامنه مجاز
   credentials: true, // برای ارسال کوکی
 }));
+
+
 app.use(express.json())
 app.use(express.urlencoded())
 app.use(cookieparser())
