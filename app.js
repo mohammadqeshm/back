@@ -814,7 +814,7 @@ res.clearCookie('tooky', {
   secure: true,    // استفاده از HTTPS در محیط تولید
   path: '/',       // مسیر کوکی
 });
-res.json({status:'شما با موفقیت خارج شدید');
+res.json({status:'شما با موفقیت خارج شدید'});
 });
  app.get("/",(req,res)=>{
 res.sendFile(path.join(__dirname,"a.html"))
