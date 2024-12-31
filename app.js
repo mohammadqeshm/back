@@ -135,39 +135,19 @@ passport.deserializeUser((user, done) => {
 
 //api----------------------------------------------------------
 app.post("/signup",async(req,res)=>{
-
-database.connect()
-    .then(() => {
-        console.log("متصل است پایگاه داده");
-    })
-    .catch((err) => {
-        console.error('متصل نیست پایگاه داده:', err);
-    });
     async function createTable() {
+        
   const query =`
-    CREATE TABLE orders (
-        id SERIAL PRIMARY KEY,
-        userid INT DEFAULT NULL,
-        namee VARCHAR(30) NOT NULL,
-        numbers INT NOT NULL,
-        typedate VARCHAR(2) NOT NULL,
-        price VARCHAR(20) NOT NULL,
-        barcode BIGINT NOT NULL,
-        datey VARCHAR(15) NOT NULL,
-        addrs VARCHAR(100) DEFAULT NULL,
-        CONSTRAINT fk_user FOREIGN KEY (userid) REFERENCES users (id)
-    );
-  `;
-  
+SELECT table_name 
+FROM information_schema.tables 
+WHERE table_schema = 'public';`;
   try {
-    await database.connect();
-    await database.query(query);
+  let dbmm=  await database.query(query);
     console.log('جدول اوکی شد');
+     console.log(dbmm)
   } catch (err) {
     console.error('خطای ساخت جدول:', err);
-  } finally {
-    await database.end();
-  }
+  } 
 }
 
 createTable();
