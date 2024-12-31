@@ -115,7 +115,7 @@ app.use(session({
 passport.use(new GoogleStrategy({
     clientID: process.env.ci,
     clientSecret: process.env.cs,
-    callbackURL: 'http://localhost:5000/back'
+    callbackURL: 'https://code-w.onrender.com/back'
   },
   async (accessToken, refreshToken, profile, done) => {
     try {
@@ -273,11 +273,11 @@ try {
 
     // تنظیم کوکی حاوی توکن
     res.cookie("tooky", token, {
-      httpOnly: true,
-      maxAge: 24 * 60 * 60 * 1000, // 1 روز
-      secure: false, // فقط در محیط توسعه
-      sameSite: "lax", // یا 'none' در حالت cross-origin
-    });
+      httpOnly: true,   // کوکی فقط از طریق سرور خوانده شود
+    secure: true,     // فقط روی HTTPS
+    sameSite: 'None', // برای Cross-Origin
+    maxAge: 24 * 60 * 60 * 1000, // مدت‌زمان اعتبار کوکی (1 روز)
+  });
 
     // پاسخ موفقیت
     res.json({ status: "ثبت‌نام موفقیت‌آمیز بود" });
@@ -403,11 +403,11 @@ if (!find) {
   if (com === true) {
     let token = await jwt.sign({ id: find.id }, "testapp", { expiresIn: "12h" });
     res.cookie("tooky", token, {
-      httpOnly: true,
-      maxAge: 24 * 60 * 60 * 1000,
-      secure: false, // فقط در محیط توسعه
-      sameSite: "lax", // یا 'none' برای cross-origin کامل
-    });
+   httpOnly: true,   // کوکی فقط از طریق سرور خوانده شود
+    secure: true,     // فقط روی HTTPS
+    sameSite: 'None', // برای Cross-Origin
+    maxAge: 24 * 60 * 60 * 1000, // مدت‌زمان اعتبار کوکی (1 روز)
+  });
     res.json({ status: "login" });
   } else {
     res.json({ status: "رمز اشتباه" });
@@ -480,12 +480,22 @@ if (uss.length === 0) {
 
   // ایجاد توکن JWT برای کاربر
   let token = await jwt.sign({ id: uss2[0].id }, "testapp", { expiresIn: "12h" });
-  res.cookie("tooky", token);
+  res.cookie("tooky", token,{
+  httpOnly: true,   // کوکی فقط از طریق سرور خوانده شود
+    secure: true,     // فقط روی HTTPS
+    sameSite: 'None', // برای Cross-Origin
+    maxAge: 24 * 60 * 60 * 1000, // مدت‌زمان اعتبار کوکی (1 روز)
+  });
   res.redirect("https://mohammadqeshm.github.io/code-w/index.html");
 } else {
   // اگر کاربر قبلاً ثبت‌نام کرده باشد
   let token = await jwt.sign({ id: uss[0].id }, "testapp", { expiresIn: "12h" });
-  res.cookie("tooky", token);
+  res.cookie("tooky", token,{
+  httpOnly: true,   // کوکی فقط از طریق سرور خوانده شود
+    secure: true,     // فقط روی HTTPS
+    sameSite: 'None', // برای Cross-Origin
+    maxAge: 24 * 60 * 60 * 1000, // مدت‌زمان اعتبار کوکی (1 روز)
+  });
   res.redirect("https://mohammadqeshm.github.io/code-w/index.html");
 }
 
