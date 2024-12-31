@@ -135,6 +135,15 @@ passport.deserializeUser((user, done) => {
 
 //api----------------------------------------------------------
 app.post("/signup",async(req,res)=>{
+
+database.connect()
+    .then(() => {
+        console.log("متصل است پایگاه داده");
+    })
+    .catch((err) => {
+        console.error('متصل نیست پایگاه داده:', err);
+    });
+    
  try {  
 let email=req.body.email
 let password=req.body.password
